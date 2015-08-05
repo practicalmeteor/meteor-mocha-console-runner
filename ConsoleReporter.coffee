@@ -1,7 +1,7 @@
-log = new ObjectLogger('SpacejamReporter', 'info')
+log = new ObjectLogger('ConsoleReporter', 'info')
 
 
-class SpacejamReporter extends  practical.mocha.BaseReporter
+class ConsoleReporter extends  practical.mocha.BaseReporter
 
 
   constructor: (@clientRunner, @serverRunner, @options)->
@@ -118,4 +118,4 @@ class SpacejamReporter extends  practical.mocha.BaseReporter
       log.return()
 
 Meteor.startup ->
-  MochaRunner.setReporter(SpacejamReporter)
+  MochaRunner.setReporter(ConsoleReporter)

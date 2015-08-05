@@ -12,7 +12,7 @@ Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
   api.use(['coffeescript', "practicalmeteor:mocha"]);
   api.imply("practicalmeteor:mocha");
-  api.addFiles('SpacejamReporter.coffee', 'client');
+  api.addFiles('ConsoleReporter.coffee', 'client');
 
 });
 
