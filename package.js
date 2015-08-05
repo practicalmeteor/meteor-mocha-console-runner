@@ -1,7 +1,7 @@
 Package.describe({
   name: 'practicalmeteor:mocha-spacejam-reporter',
   version: '0.1.0',
-  summary: 'Spacejam reporter',
+  summary: 'A mocha package tests console reporter to be used with spacejam.',
   git: 'https://github.com/practicalmeteor/meteor-mocha-spacejam-reporter.git',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
