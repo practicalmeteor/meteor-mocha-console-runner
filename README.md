@@ -1,3 +1,10 @@
-# Mocha Spacejam Reporter
+# Mocha Console Test Reporter
 
-`spacejam --driver-package practicalmeteor:mocha-spacejam-reporter`
+A mocha package tests console reporter to be used with spacejam or standalone.
+
+
+### To run with spacejam
+`spacejam test-packages <package-name> --driver-package practicalmeteor:mocha-console-reporter`
+
+### To run with meteor
+`meteor test-packages <package-name> --driver-package practicalmeteor:mocha-console-reporter`
