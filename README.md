@@ -1,4 +1,4 @@
-# practicalmeteor:mocha-console-reporter
+## practicalmeteor:mocha-console-reporter
 
 A meteor package that runs your mocha package tests and prints the server side and client side test results to the client-side console. To be used with [spacejam](https://www.npmjs.com/package/spacejam), for running your mocha package tests from the command line or in continuous integration environments. 
 
