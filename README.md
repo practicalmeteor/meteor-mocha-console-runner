@@ -15,3 +15,9 @@ Client side tests will be executed in phantomjs.
 `meteor test-packages <package-name(s)> --driver-package=practicalmeteor:mocha-console-reporter`
 
 Open any browser to run your client side tests in that browser. Will  print the results of both server side and client side tests to the browser console.
+
+## License
+
+practicalmeteor:mocha-console-reporter - [MIT](https://github.com/practicalmeteor/meteor-mocha-console-reporter/blob/master/LICENSE.md)
+
+[mocha](https://github.com/mochajs/mocha) - [MIT](https://github.com/mochajs/mocha/blob/master/LICENSE)
