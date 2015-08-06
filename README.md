@@ -16,6 +16,8 @@ Client side tests will be executed in phantomjs.
 
 Open any browser to run your client side tests in that browser. Will  print the results of both server side and client side tests to the browser console.
 
+If you'd like an HTML reporter, just use [practicalmeteor:mocha](https://atmospherejs.com/practicalmeteor/mocha) directly.
+
 ## License
 
 practicalmeteor:mocha-console-reporter - [MIT](https://github.com/practicalmeteor/meteor-mocha-console-reporter/blob/master/LICENSE.md)
