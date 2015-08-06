@@ -11,9 +11,9 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
   
-  api.use(['coffeescript', "practicalmeteor:mocha"]);
+  api.use(['coffeescript', "practicalmeteor:mocha@2.1.0_2"]);
 
-  api.imply("practicalmeteor:mocha");
+  api.imply("practicalmeteor:mocha@2.1.0_2");
 
   api.addFiles('ConsoleReporter.coffee', 'client');
 });
