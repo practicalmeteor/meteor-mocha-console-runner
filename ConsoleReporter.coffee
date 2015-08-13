@@ -23,6 +23,7 @@ class ConsoleReporter extends  practical.mocha.BaseReporter
       @serverRunner.on 'test end', @onServerTestEnd
       @serverRunner.on "end", @onServerRunEnd
 
+      @clientRunner.on 'start', => @printReporterHeader("Client")
       @clientRunner.on 'test end', @onClientTestEnd
       @clientRunner.on "end", @onClientRunEnd
 
@@ -32,6 +33,7 @@ class ConsoleReporter extends  practical.mocha.BaseReporter
   printReporterHeader: (where)=>
     try
       log.enter("printReporterHeader[#{where}]")
+      return if @options.runOrder isnt 'serial'
       console.log("\n--------------------------------------------------")
       console.log("------------------ #{where} tests ------------------")
       console.log("--------------------------------------------------\n")
@@ -49,7 +51,7 @@ class ConsoleReporter extends  practical.mocha.BaseReporter
     try
       log.enter("onServerRunEnd", stats)
       @serverStats = stats
-      @printClientTests()
+      @finishAndPrintTestsSummary()
 
     finally
       log.return()
@@ -57,8 +59,7 @@ class ConsoleReporter extends  practical.mocha.BaseReporter
   onClientTestEnd: (test)=>
     try
       log.enter("onClientTestEnd", test)
-      @clientTests.push(test)
-
+      @printTest(test, 'client')
     finally
       log.return()
 
@@ -68,7 +69,7 @@ class ConsoleReporter extends  practical.mocha.BaseReporter
       @clientStats = @clientRunner.stats
       # total property is missing in clientRunner.stats
       @clientStats.total = @clientRunner.total
-      @printClientTests()
+      @finishAndPrintTestsSummary()
 
     finally
       log.return()
@@ -76,33 +77,22 @@ class ConsoleReporter extends  practical.mocha.BaseReporter
   printTest: (test, where)->
     try
       log.enter("prinTest", test)
+
       state = test.state or (if test.pending then "pending")
-      console.log("#{test.fullTitle()} : #{state}")
+      where = if @options.runOrder isnt 'serial' then "| #{where}" else ""
+
+      console.log("#{test.fullTitle()} : #{state} #{where}")
       if test.state is "failed"
         console.log("  " + (test.err.stack || test.err))
-      console.log(" ")
+      console.log("")
     finally
       log.return()
 
-  printClientTests: ()=>
-    try
-      log.enter("printClientTests")
-      return if not @clientStats?.total? or not @serverStats?.total?
-
-      @printReporterHeader("Client")
-
-      for test in @clientTests
-        @printTest(test, "client")
-
-      @finishAndPrintTestsSummary()
-    finally
-      log.return()
 
   finishAndPrintTestsSummary: ()=>
     try
       log.enter("finishAndPrintTestsSummary")
-      if not @clientStats and not @serverStats
-        throw new Error("Missing client or server stats to print tests summary")
+      return if not @clientStats?.total? or not @serverStats?.total?
 
       console.log("\n--------------------------------------------------")
       console.log("---------------------RESULTS----------------------")
