@@ -32,7 +32,7 @@ class ConsoleReporter extends  practical.mocha.BaseReporter
 
   printReporterHeader: (where)=>
     try
-      log.enter("printReporterHeader[#{where}]")
+      log.enter("printReporterHeader", where)
       return if @options.runOrder isnt 'serial'
       console.log("\n--------------------------------------------------")
       console.log("------------------ #{where} tests ------------------")
@@ -79,9 +79,15 @@ class ConsoleReporter extends  practical.mocha.BaseReporter
       log.enter("prinTest", test)
 
       state = test.state or (if test.pending then "pending")
-      where = if @options.runOrder isnt 'serial' then "| #{where}" else ""
+      if @options.runOrder isnt 'serial'
+        # Get first chart 's' or 'c' for client/server
+        where = where[0].toUpperCase() + ": "
+      else
+        # Since the test are running in parallel we don't need
+        # to specify where they are client or   server tests.
+        where = ""
 
-      console.log("#{test.fullTitle()} : #{state} #{where}")
+      console.log("#{where}#{test.fullTitle()} : #{state}")
       if test.state is "failed"
         console.log("  " + (test.err.stack || test.err))
       console.log("")
