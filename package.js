@@ -13,8 +13,6 @@ Package.onUse(function(api) {
   api.use(['coffeescript', "practicalmeteor:mocha@2.1.0_4"]);
   api.imply("practicalmeteor:mocha@2.1.0_4");
   api.addFiles('ConsoleReporter.coffee', 'client');
-
-  api.addFiles('ConsoleReporter.coffee', 'client');
 });
 
 Package.onTest(function(api) {
