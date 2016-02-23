@@ -113,5 +113,5 @@ class ConsoleReporter extends  practical.mocha.BaseReporter
     finally
       log.return()
 
-Meteor.startup ->
+module.exports.runTests = () ->
   MochaRunner.setReporter(ConsoleReporter)
