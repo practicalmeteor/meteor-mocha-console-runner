@@ -3,6 +3,7 @@ log = new ObjectLogger('ConsoleReporter', 'info')
 
 class ConsoleReporter extends  practical.mocha.BaseReporter
 
+  VERSION: "0.2.0-rc.1"
 
   constructor: (@clientRunner, @serverRunner, @options)->
     try
