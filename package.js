@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'practicalmeteor:mocha-console-reporter',
+  name: 'practicalmeteor:mocha-console-runner',
   version: '0.2.0-meteor-1.3-beta.16.1',
   summary: 'A mocha console reporter for running your package tests from the command line with spacejam.',
   git: 'https://github.com/practicalmeteor/meteor-mocha-console-reporter.git',
