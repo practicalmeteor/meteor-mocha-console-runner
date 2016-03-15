@@ -11,7 +11,7 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom("1.3-beta.16");
-  api.use(['coffeescript', "practicalmeteor:mocha@2.1.0-meteor-1.3-beta.16.1", 'practicalmeteor:loglevel', 'ecmascript']);
+  api.use(['coffeescript', "practicalmeteor:mocha@2.1.0-meteor-1.3-beta.16.1", 'practicalmeteor:loglevel@1.2.0_2', 'ecmascript']);
   api.imply("practicalmeteor:mocha@2.1.0-meteor-1.3-beta.16.1");
   api.mainModule('ConsoleReporter.coffee', 'client');
 });
