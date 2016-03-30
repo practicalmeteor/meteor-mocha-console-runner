@@ -1,3 +1,5 @@
+{ObjectLogger} = require("meteor/practicalmeteor:loglevel")
+
 log = new ObjectLogger('ConsoleReporter', 'info')
 
 
