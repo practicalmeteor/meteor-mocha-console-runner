@@ -5,7 +5,7 @@ log = new ObjectLogger('ConsoleReporter', 'info')
 
 class ConsoleReporter extends  practical.mocha.BaseReporter
 
-  VERSION: "0.2.0-rc.1"
+  VERSION: "0.2.0"
 
   constructor: (@clientRunner, @serverRunner, @options)->
     try
@@ -107,6 +107,7 @@ class ConsoleReporter extends  practical.mocha.BaseReporter
       console.log("---------------------RESULTS----------------------")
       console.log("PASSED:", @serverStats.passes + @clientStats.passes)
       console.log("FAILED:", @serverStats.failures + @clientStats.failures)
+      console.log("SKIPPED:", @serverStats.pending + @clientStats.pending)
       console.log("TOTAL:", @serverStats.total + @clientStats.total)
       console.log("--------------------------------------------------")
       console.log("--------------------------------------------------\n")
