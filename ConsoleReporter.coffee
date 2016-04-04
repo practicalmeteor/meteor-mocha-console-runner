@@ -1,9 +1,10 @@
 {ObjectLogger} = require("meteor/practicalmeteor:loglevel")
+{MochaRunner, BaseReporter} = require("meteor/practicalmeteor:mocha")
 
 log = new ObjectLogger('ConsoleReporter', 'info')
 
 
-class ConsoleReporter extends  practical.mocha.BaseReporter
+class ConsoleReporter extends  BaseReporter
 
   VERSION: "0.2.0"
 
