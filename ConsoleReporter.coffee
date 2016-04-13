@@ -1,99 +1,71 @@
 {ObjectLogger} = require("meteor/practicalmeteor:loglevel")
-{MochaRunner, BaseReporter} = require("meteor/practicalmeteor:mocha")
+{MochaRunner, ClientServerBaseReporter} = require("meteor/practicalmeteor:mocha")
 
 log = new ObjectLogger('ConsoleReporter', 'info')
 
 
-class ConsoleReporter extends  BaseReporter
+class ConsoleReporter extends  ClientServerBaseReporter
 
-  VERSION: "0.2.0"
+  VERSION: "0.2.1-rc.1"
 
   constructor: (@clientRunner, @serverRunner, @options)->
     try
       log.enter('constructor')
-      super(@clientRunner, @options)
-      @registerRunnerEvents()
-      @serverStats = null
-      @clientStats = null
-      @clientTests =  []
+      super(@clientRunner, @serverRunner, @options)
+
+      @registerRunnerEvents('client')
+      @registerRunnerEvents('server')
+      MochaRunner.on "end all", => @finishAndPrintTestsSummary()
+
     finally
       log.return()
 
-  registerRunnerEvents:->
+
+  registerRunnerEvents: (where)->
     try
       log.enter("registerRunnerEvents")
 
-      @serverRunner.on "start", => @printReporterHeader("Server")
-      @serverRunner.on 'test end', @onServerTestEnd
-      @serverRunner.on "end", @onServerRunEnd
+      @["#{where}Runner"].on "start", => @printReporterHeader(where)
+      @["#{where}Runner"].on 'test end', (test)=> @printTest(test, where)
 
-      @clientRunner.on 'start', => @printReporterHeader("Client")
-      @clientRunner.on 'test end', @onClientTestEnd
-      @clientRunner.on "end", @onClientRunEnd
+      # Log for errors with hooks
+      @["#{where}Runner"].on "fail", (hook)=> @printTest(hook, where) if hook.type is 'hook'
 
     finally
       log.return()
+
 
   printReporterHeader: (where)=>
     try
       log.enter("printReporterHeader", where)
       return if @options.runOrder isnt 'serial'
+      # i.e client = Client
+      where = where[0].toUpperCase() + where.substr(1)
       console.log("\n--------------------------------------------------")
       console.log("------------------ #{where} tests ------------------")
       console.log("--------------------------------------------------\n")
     finally
       log.return()
 
-  onServerTestEnd: (test)=>
-    try
-      log.enter("onServerTestEnd", test)
-      @printTest(test, "server")
-    finally
-      log.return()
-
-  onServerRunEnd: (stats)=>
-    try
-      log.enter("onServerRunEnd", stats)
-      @serverStats = stats
-      @finishAndPrintTestsSummary()
-
-    finally
-      log.return()
-
-  onClientTestEnd: (test)=>
-    try
-      log.enter("onClientTestEnd", test)
-      @printTest(test, 'client')
-    finally
-      log.return()
-
-  onClientRunEnd: ()=>
-    try
-      log.enter("onClientRunEnd")
-      @clientStats = @clientRunner.stats
-      # total property is missing in clientRunner.stats
-      @clientStats.total = @clientRunner.total
-      @finishAndPrintTestsSummary()
-
-    finally
-      log.return()
 
   printTest: (test, where)->
     try
       log.enter("prinTest", test)
-
       state = test.state or (if test.pending then "pending")
-      if @options.runOrder isnt 'serial'
+
+      # Since the test are running in parallel we don't need
+      # to specify where they are client or   server tests.
+      if @options.runOrder is 'serial'
+        where = ""
+      else
         # Get first chart 's' or 'c' for client/server
         where = where[0].toUpperCase() + ": "
-      else
-        # Since the test are running in parallel we don't need
-        # to specify where they are client or   server tests.
-        where = ""
 
       console.log("#{where}#{test.fullTitle()} : #{state}")
+
       if test.state is "failed"
         console.log("  " + (test.err.stack || test.err))
+
       console.log("")
     finally
       log.return()
@@ -112,9 +84,9 @@ class ConsoleReporter extends  BaseReporter
       console.log("TOTAL:", @serverStats.total + @clientStats.total)
       console.log("--------------------------------------------------")
       console.log("--------------------------------------------------\n")
-      window.TEST_STATUS = {FAILURES: @serverStats.failures + @clientStats.failures, DONE: true}
+      window.TEST_STATUS = {FAILURES: @stats.failures, DONE: true}
       window.DONE = true
-      window.FAILURES = @serverStats.failures + @clientStats.failures
+      window.FAILURES = @stats.failures
     finally
       log.return()
 
