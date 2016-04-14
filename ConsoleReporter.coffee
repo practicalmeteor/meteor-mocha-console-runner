@@ -12,9 +12,6 @@ class ConsoleReporter extends  ClientServerBaseReporter
     try
       log.enter('constructor')
       super(@clientRunner, @serverRunner, @options)
-
-      @registerRunnerEvents('client')
-      @registerRunnerEvents('server')
       MochaRunner.on "end all", => @finishAndPrintTestsSummary()
 
     finally
@@ -90,5 +87,8 @@ class ConsoleReporter extends  ClientServerBaseReporter
     finally
       log.return()
 
+
+module.exports.ConsoleReporter = ConsoleReporter
 module.exports.runTests = () ->
   MochaRunner.setReporter(ConsoleReporter)
+
