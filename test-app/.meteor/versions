@@ -52,8 +52,8 @@ observe-sequence@1.0.9
 ordered-dict@1.0.5
 practicalmeteor:chai@2.1.0_1
 practicalmeteor:loglevel@1.2.0_2
-practicalmeteor:mocha@2.4.6-rc.1
-practicalmeteor:mocha-console-runner@0.2.1-rc.2
+practicalmeteor:mocha@2.4.6-rc.3
+practicalmeteor:mocha-console-runner@0.2.1-rc.3
 practicalmeteor:mocha-core@0.1.4
 practicalmeteor:sinon@1.14.1_2
 promise@0.6.5
