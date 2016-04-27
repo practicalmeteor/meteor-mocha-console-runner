@@ -12,17 +12,19 @@ class ConsoleReporter extends  ClientServerBaseReporter
     try
       log.enter('constructor')
       super(@clientRunner, @serverRunner, @options)
-      @registerRunnerEvents("server")
-      @registerRunnerEvents("client")
       MochaRunner.on "end all", => @finishAndPrintTestsSummary()
 
     finally
       log.return()
 
-
+  ###
+    Overwriting from ClientServerBaseReporter
+  ###
   registerRunnerEvents: (where)->
     try
       log.enter("registerRunnerEvents")
+      # Call super.registerRunnerEvents to register events from ClientServerBaseReporter first
+      super(where)
 
       @["#{where}Runner"].on "start", => @printReporterHeader(where)
       @["#{where}Runner"].on 'test end', (test)=> @printTest(test, where)
@@ -77,15 +79,12 @@ class ConsoleReporter extends  ClientServerBaseReporter
 
       console.log("\n--------------------------------------------------")
       console.log("---------------------RESULTS----------------------")
-      console.log("PASSED:", @serverStats.passes + @clientStats.passes)
-      console.log("FAILED:", @serverStats.failures + @clientStats.failures)
-      console.log("SKIPPED:", @serverStats.pending + @clientStats.pending)
-      console.log("TOTAL:", @serverStats.total + @clientStats.total)
+      console.log("PASSED:", @stats.passes)
+      console.log("FAILED:", @stats.failures)
+      console.log("SKIPPED:", @stats.pending)
+      console.log("TOTAL:", @stats.total)
       console.log("--------------------------------------------------")
       console.log("--------------------------------------------------\n")
-      window.TEST_STATUS = {FAILURES: @stats.failures, DONE: true}
-      window.DONE = true
-      window.FAILURES = @stats.failures
     finally
       log.return()
 
