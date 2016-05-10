@@ -6,7 +6,7 @@ log = new ObjectLogger('ConsoleReporter', 'info')
 
 class ConsoleReporter extends  ClientServerBaseReporter
 
-  @VERSION: "0.2.1-rc.3"
+  @VERSION: "0.2.1-rc.4"
 
   constructor: (@clientRunner, @serverRunner, @options)->
     try

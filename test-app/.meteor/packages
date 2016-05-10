@@ -22,4 +22,4 @@ insecure                # Allow all DB writes from clients (for prototyping)
 practicalmeteor:mocha@2.4.5_2
 practicalmeteor:chai
 practicalmeteor:loglevel
-practicalmeteor:mocha-console-runner@0.2.1-rc.3
+practicalmeteor:mocha-console-runner@0.2.1-rc.4
